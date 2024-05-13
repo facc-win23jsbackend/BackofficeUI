@@ -1,0 +1,47 @@
+﻿@page "/"
+@using BackOfficeUI.Client.Components
+
+<PageTitle>Dashboard</PageTitle>
+
+<div class="home">
+    <div>
+        <h1 class="h1">Dashboard</h1>
+        <p class="lead">View the most interesting stats of this system.</p>
+    </div>
+
+    <div class="dashboard-stats">
+        <Card>
+            <CardHeader>
+                Customers
+            </CardHeader>
+            <CardBody>
+                we now have 10000000 customers...
+            </CardBody>
+        </Card>
+        
+        <Card>
+            <CardHeader>
+                Enrollments
+            </CardHeader>
+            <CardBody>
+                we now have 712388 purchased courses....
+            </CardBody>
+        </Card>
+
+        <Card>
+            <CardHeader>
+                Orders
+            </CardHeader>
+            <CardBody>
+                <div class="">
+                    <div>
+                        There are currently 8 unpaid orders.
+                    </div>
+                    <div>
+                        There are currently 4 who <span class="text-danger"> needs</span> attention.
+                    </div>
+                </div>
+            </CardBody>
+        </Card>
+    </div>
+</div>

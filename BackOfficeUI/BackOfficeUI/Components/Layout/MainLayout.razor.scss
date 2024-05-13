@@ -1,0 +1,10 @@
+.wrapper {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+  background: var(--theme-gradient-background);
+}
+
+.main {
+  padding: 20px 30px;
+}
