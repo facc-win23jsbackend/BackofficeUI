@@ -1,0 +1,15 @@
+@typeparam TItem
+
+@code {
+   
+    [Parameter] public string Header { get; set; }
+    [Parameter] public RenderFragment<TItem> Template { get; set; }
+    
+    [CascadingParameter]
+    public TableContext<TItem> TableContext { get; set; }
+
+    protected override void OnInitialized()
+    {
+        TableContext.Columns.Add(this);
+    }
+}
