@@ -1,33 +1,31 @@
 @typeparam TItem
 
-
 <CascadingValue Value="Context">
     @ChildContent
 </CascadingValue>
-
 <Card>
     <CardHeader>
         @TableHead
     </CardHeader>
     <CardBody>
-        <table>
+        <table class="data-table">
             <thead>
-            <tr>
+            <tr class="tr">
                 @foreach (var column in Context.Columns)
                 {
-                <th>@column.Header</th>
+                    <th>@column.Header</th>
                 }
             </tr>
             </thead>
             <tbody>
             @foreach (var item in Items)
             {
-            <tr>
-                @foreach (var column in Context.Columns)
-                {
-                <td>@column.Template(item)</td>
-                }
-            </tr>
+                <tr>
+                    @foreach (var column in Context.Columns)
+                    {
+                        <td>@column.Template(item)</td>
+                    }
+                </tr>
             }
             </tbody>
         </table>
@@ -44,7 +42,6 @@
     [Parameter] public IEnumerable<TItem> Items { get; set; }
     [Parameter] public RenderFragment ChildContent { get; set; }
     TableContext<TItem> Context = new TableContext<TItem>();
-    
- 
+
 
 }

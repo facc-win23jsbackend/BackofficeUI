@@ -3,9 +3,9 @@
   text-align: left;
   background: var(--theme-gradient);
   padding: 25px;
-  th, td {
-
-    padding: 5px 30px;
-  }
-
 }
+.data-table th, .data-table td {
+  padding: 5px 30px;
+}
+
+/*# sourceMappingURL=DataTable.razor.css.map */
