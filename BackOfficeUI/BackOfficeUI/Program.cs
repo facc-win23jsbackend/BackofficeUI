@@ -31,6 +31,7 @@ builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
         oidcOptions.MapInboundClaims = false;
         oidcOptions.TokenValidationParameters.NameClaimType = JwtRegisteredClaimNames.Name;
         oidcOptions.TokenValidationParameters.RoleClaimType = "role";
+        oidcOptions.SaveTokens = true;
     })
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
 
