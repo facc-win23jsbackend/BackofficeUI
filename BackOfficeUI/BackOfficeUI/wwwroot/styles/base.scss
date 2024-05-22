@@ -12,32 +12,79 @@
 
 :root {
   --transparent: transparent;
-  --white:     #FFFFFF;
-  --gray-100:  #F3F6FF;
-  --gray-200:  #EFF2FC;
-  --gray-300:  #E2E5F1;
-  --gray-400:  #D4D7E5;
-  --gray-500:  #B4B7C9;
-  --gray-600:  #9397AD;
-  --gray-700:  #565973;
-  --gray-800:  #33354D;
+  --white: #FFFFFF;
+  --gray-100: #F3F6FF;
+  --gray-200: #EFF2FC;
+  --gray-300: #E2E5F1;
+  --gray-400: #D4D7E5;
+  --gray-500: #B4B7C9;
+  --gray-600: #9397AD;
+  --gray-700: #565973;
+  --gray-800: #33354D;
   --gray-850: #131315;
-  --gray-900:  #0B0F19;
-  --black:     #000000;
-  --danger:    #EF4444;
-  --success:   #22C55E;
-  --warning:   #FFBA08;
-  --info:      #4C82F7;
-  --theme:     #6366F1;
+  --gray-900: #0B0F19;
+  --black: #000000;
+  --danger: #EF4444;
+  --pink: #D946EF;
+  --success: #22C55E;
+  --warning: #FFBA08;
+  --info: #4C82F7;
+  --theme: #6366F1;
   --theme-secondary: #8B5CF6;
   --theme-opacity: #6365f114;
   --theme-gradient: linear-gradient(90deg, #6366F1 0%, #8B5CF6 50%, #D946EF 100%);
   --theme-gradient-background: linear-gradient(-1deg, rgba(99, 101, 241, 0.10) 0%, rgba(216, 70, 239, 0.05) 45%, rgba(241, 244, 253, 0.07) 75%);
 }
 
+@mixin shadow-s {
+  box-shadow: 0px 2px 6.4px -1px rgba(19, 16, 34, 0.03), 0px 4.4px 12px -1px rgba(19, 16, 34, 0.06);
+}
+
+@mixin shadow-m {
+  box-shadow: 0px 4px 9px -1px rgba(19, 16, 34, 0.03), 0px 4.4px 20px -1px rgba(19, 16, 34, 0.05);
+}
+
+@mixin shadow-l {
+  box-shadow: 0px 4px 13px -2px rgba(19, 16, 34, 0.06), 0px 4.8px 24.4px -6px rgba(19, 16, 34, 0.10);
+}
+
+@mixin theme-shadow {
+  box-shadow: 0px 8px 18px -8px rgba(99, 102, 241, 0.90);
+}
+
+@mixin theme-secondary-shadow {
+  box-shadow: 0px 8px 18px -8px rgba(19, 16, 34, 0.15);
+}
+
+@mixin standard-text {
+  line-height: 160%;
+  font-weight: 400;
+  color: var(--gray-700);
+
+  body.dark-mode & {
+    color: var(--white);
+  }
+}
+
+@mixin standard-heading {
+  @include standard-text();
+  font-weight: 800;
+  color: var(--gray-900);
+  body.dark-mode & {
+    color: var(--white);
+  }
+}
+
+@mixin text-nav {
+  @include standard-text;
+  font-size: 16px;
+  color: var(--gray-800);
+  font-weight: 600 !important;
+}
+
 h1 {
   font-size: 2rem;
-  
+
 }
 
 .lead {
@@ -51,12 +98,11 @@ h1 {
 a {
   color: var(--gray-100);
   text-decoration: none;
-  
+
   &:hover {
     color: var(--gray-400);
   }
 }
-
 
 
 .invalid {
@@ -65,6 +111,43 @@ a {
 
 .validation-message {
   color: #e50000;
+}
+
+form {
+ .form-header {
+   font-size: 1.8rem;
+   font-weight: normal;
+ }
+  
+  .form-row {
+    display: flex;
+    gap: 3rem;
+    .form-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      input, textarea {
+        padding: 8px 15px;
+        font-size: 1rem;
+        border-radius: 6px;
+      }
+    }
+  }
+  .form-submit {
+    margin-top: 20px;
+    display:flex;
+    justify-content: end;
+    
+    button {
+      font-size: 1.7rem;
+    }
+  }
 }
 
 .blazor-error-boundary {
