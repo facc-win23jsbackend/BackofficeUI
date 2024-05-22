@@ -2,6 +2,7 @@ using BackOfficeUI;
 using BackOfficeUI.Client.Pages;
 using BackOfficeUI.Components;
 using BackOfficeUI.Extensions;
+using Blazored.Toast;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -30,6 +31,7 @@ builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
         oidcOptions.MapInboundClaims = false;
         oidcOptions.TokenValidationParameters.NameClaimType = JwtRegisteredClaimNames.Name;
         oidcOptions.TokenValidationParameters.RoleClaimType = "role";
+        oidcOptions.SaveTokens = true;
     })
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -38,6 +40,9 @@ builder.Services.ConfigureCookieOidcRefresh(CookieAuthenticationDefaults.Authent
 builder.Services.AddAuthorization(); 
 
 builder.Services.AddScoped<AuthenticationStateProvider, PersistingAuthenticationStateProvider>();
+builder.Services.AddScoped<HttpClient>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddBlazoredToast();
 
 var app = builder.Build();
 

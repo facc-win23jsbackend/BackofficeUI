@@ -1,0 +1,54 @@
+@page "/customers"
+@using System.Net.Http.Headers
+@using BackOfficeUI.Models
+@using Microsoft.AspNetCore.Authentication
+@using BackOfficeUI.Client.Components.Table
+@rendermode InteractiveAuto
+@inject IHttpContextAccessor httpContextAccessor
+@inject HttpClient Http
+<div>
+    <h1 class="h1">Customers</h1>
+    <p class="lead">All customers.</p>
+    
+   @if (Customers is not null && Customers.Count > 0)
+    {
+        <DataTable Items="Customers">
+            <Column Header="Id" TItem="Customer" Context="customer">
+                <Template>
+                    @customer.Id
+                </Template>
+            </Column>
+            <Column Header="First name" TItem="Customer" Context="customer">
+                <Template>
+                    @customer.FirstName
+                </Template>
+            </Column>
+            <Column Header="Last name" TItem="Customer" Context="customer">
+                <Template>
+                    @customer.LastName
+                </Template>
+            </Column>
+            <Column Header="Options" TItem="Customer" Context="customer">
+                <Template>
+                    <a href="customers/@customer.Id">Edit</a>
+                </Template>
+            </Column>
+        </DataTable>
+    }
+    
+</div>
+
+
+
+@code {
+
+    public List<Customer>? Customers { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+        Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        Customers = await Http.GetFromJsonAsync<List<Customer>>("https://jsbackend-customerapi.azurewebsites.net/api/customers");
+    }
+
+}
