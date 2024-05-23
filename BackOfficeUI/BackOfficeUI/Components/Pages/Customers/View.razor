@@ -1,0 +1,112 @@
+@page "/customers/{id}"
+@using System.Net.Http.Headers
+@using BackOfficeUI.Client.Components
+@using BackOfficeUI.Models
+@using Microsoft.AspNetCore.Authentication
+@inject HttpClient Http
+@inject IHttpContextAccessor httpContextAccessor
+@inject IToastService toastService
+<Card>
+    <CardHeader>
+        <div class="top-menu">
+            <h2>@Id - @Fullname</h2>
+            <a href="/customers"><i class="fa-regular fa-circle-left"></i></a>
+        </div>
+    </CardHeader>
+    <CardBody>
+        <EditForm Model="Customer" FormName="customerform" novalidate OnValidSubmit="() => UpdateCustomer()">
+            <DataAnnotationsValidator />
+            <div class="form-row">
+                <div class="form-fields">
+                    <h5 class="form-header">Base Info</h5>
+                    <div class="form-group">
+                        <label>First name</label>
+                        <InputText @bind-Value="Customer.FirstName"></InputText>
+                        <ValidationMessage For="@(() => Customer.FirstName)" class="validation-message"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Last name</label>
+                        <InputText @bind-Value="Customer.LastName"></InputText>
+                        <ValidationMessage For="@(() => Customer.LastName)" class="validation-message"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <InputText @bind-Value="Customer.Email"></InputText>
+                        <ValidationMessage For="@(() => Customer.Email)" class="validation-message"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone number</label>
+                        <InputText @bind-Value="Customer.PhoneNumber"></InputText>
+                        <ValidationMessage For="@(() => Customer.PhoneNumber)" class="validation-message"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Biography</label>
+                        <InputTextArea @bind-Value="Customer.Biography"></InputTextArea>
+                        <ValidationMessage For="@(() => Customer.Biography)" class="validation-message"/>
+                    </div>
+                </div>
+                <div class="form-fields">
+                    <h5 class="form-header">Address Info</h5>
+                    <div class="form-group">
+                        <label>Street</label>
+                        <InputText @bind-Value="Customer.StreetName"></InputText>
+                        <ValidationMessage For="@(() => Customer.StreetName)" class="validation-message"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Street 2</label>
+                        <InputText @bind-Value="Customer.StreetName_2"></InputText>
+                        <ValidationMessage For="@(() => Customer.StreetName_2)" class="validation-message"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Postal Code</label>
+                        <InputText @bind-Value="Customer.PostalCode"></InputText>
+                        <ValidationMessage For="@(() => Customer.PostalCode)" class="validation-message"/>
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <InputText @bind-Value="Customer.City"></InputText>
+                        <ValidationMessage For="@(() => Customer.City)" class="validation-message"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-submit">
+                <button class="btn-pink">Save</button>
+            </div>
+        </EditForm>
+    </CardBody>
+    <CardFooter>
+        
+    </CardFooter>
+</Card>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    public Customer Customer { get; set; } = new Customer();
+    public string Fullname { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var token = await httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+        Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        Customer = await Http.GetFromJsonAsync<Customer>($"https://jsbackend-customerapi.azurewebsites.net/api/customers/{Id}");
+        Fullname = $"{Customer?.FirstName} {Customer?.LastName}";
+    }
+
+    public async Task UpdateCustomer()
+    {
+        var token = await httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+        Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        var response = await Http.PutAsJsonAsync($"https://jsbackend-customerapi.azurewebsites.net/api/customers/{Id}", Customer);
+        
+        if (response.IsSuccessStatusCode)
+        {
+            toastService.ShowSuccess("Yeah");
+        }
+        else
+        {
+            
+        }
+    }
+}

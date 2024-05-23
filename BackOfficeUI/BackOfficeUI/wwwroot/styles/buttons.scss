@@ -1,0 +1,119 @@
+@mixin button {
+    border-radius: 6px;
+    text-align: center;
+    font-size: 14px;
+    padding: 8px 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.btn-theme { 
+    @include button;
+    background: var(--theme);
+    color: var(--white) !important;
+    border: none;
+
+    &:hover {
+        text-decoration: none;
+        background: var(--gray-700);
+        color: var(--white);
+    } 
+}
+
+.btn-theme-inverse {
+    @include button;
+    background: var(--theme-opacity);
+    color: var(--gray-700) !important;
+    border: none;
+    
+    body.dark-mode & {
+        color: var(--gray-500) !important;
+    }
+
+    &:hover {
+        text-decoration: none;
+        background: var(--gray-700);
+        color: var(--white) !important;
+    }
+}
+
+.btn-theme-s {
+    @include button;
+    @include theme-shadow;
+    background: var(--theme);
+    color: var(--white);
+    padding-top: 10px;
+    padding-bottom: 13px;
+
+    &:hover {
+        @include theme-secondary-shadow;
+        text-decoration: none;
+        background: var(--gray-700);
+        color: var(--white);
+    } 
+}
+
+.btn-gray { 
+    @include button;
+    background: var(--gray-200);
+    color: var(--gray-800);
+    border: none;
+
+    &:hover {
+        text-decoration: none;
+        background: var(--gray-700);
+        color: var(--white);
+    } 
+}
+
+.btn-pink {
+    @include button;
+    background: var(--pink);
+    color: var(--white);
+    border: none;
+
+    &:hover {
+        text-decoration: none;
+        background: var(--gray-700);
+        color: var(--white);
+    }
+}
+
+
+.btn-group {
+    display: flex;
+    gap: 20px;
+}
+
+.btn-avatar {
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    position: relative;
+    
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0); 
+        border-radius: 50%; 
+        transition: background 0.2s ease-in-out;
+    }
+
+    &:hover::after {
+        background: rgba(0, 0, 0, 0.2);
+    }
+    
+    img {
+        display: block;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+    }
+}
