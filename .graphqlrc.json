@@ -1,0 +1,12 @@
+{
+  "projects": [
+    {
+      "schema": [
+        "BackOfficeUI/BackOfficeUI/schema.graphql"
+      ],
+      "documents": [
+        "BackOfficeUI/BackOfficeUI/**/*.graphql"
+      ]
+    }
+  ]
+}

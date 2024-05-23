@@ -7,9 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\BackOfficeUI.Client\BackOfficeUI.Client.csproj"/>
+      <GraphQL Remove="GetCourse.graphql" />
+      <GraphQL Remove="GetSingleCourse.graphql" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\BackOfficeUI.Client\BackOfficeUI.Client.csproj" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
+        <PackageReference Include="strawberryshake.blazor" Version="13.9.4" />
     </ItemGroup>
 
     <ItemGroup>

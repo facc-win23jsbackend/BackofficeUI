@@ -1,0 +1,37 @@
+﻿query GetCourses {
+
+  courses {
+
+    id,
+
+    isBestseller,
+
+    imageUri,
+
+    title,
+
+    authors {
+
+        name
+
+    },
+
+    prices {
+
+        currency,
+
+        price,
+
+        discount
+
+    },
+
+    hours,
+
+    likesInPercent,
+
+    likes
+
+  }
+
+}
