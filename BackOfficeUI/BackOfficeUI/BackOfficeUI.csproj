@@ -7,14 +7,19 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Content Remove="compilerconfig.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <GraphQL Remove="CreateCourse.graphql" />
       <GraphQL Remove="GetCourse.graphql" />
       <GraphQL Remove="GetSingleCourse.graphql" />
    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\BackOfficeUI.Client\BackOfficeUI.Client.csproj" />
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.5" />
         <PackageReference Include="strawberryshake.blazor" Version="13.9.4" />
         <PackageReference Include="Blazored.Toast" Version="4.2.1" />
     </ItemGroup>
@@ -26,6 +31,10 @@
 
     <ItemGroup>
       <Folder Include="Components\Shared\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="compilerconfig.json" />
     </ItemGroup>
 
 </Project>

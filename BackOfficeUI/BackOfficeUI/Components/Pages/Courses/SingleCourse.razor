@@ -1,0 +1,62 @@
+﻿@attribute [StreamRendering]
+@page "/courses/{id}"
+
+
+@if (id is null)
+{
+    <p>Loading ..</p>
+
+
+} else
+{
+    <UseGetSingleCourses Context="result" Id="@id">
+        <ChildContent>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            @if (id != null && result.OneCourses != null)
+            {
+                <div class="single-course">
+                    <p>@result.OneCourses.Id</p>
+                    <p>@result.OneCourses.Title</p>
+                   
+                </div>
+            }
+                    
+
+        </ChildContent>
+        <ErrorContent>
+            Error ..
+        </ErrorContent>
+        <LoadingContent>
+            Loading ..
+        </LoadingContent>
+    </UseGetSingleCourses>
+}
+
+
+@code {
+    [Parameter]
+    public string? id { get; set; }
+
+}
