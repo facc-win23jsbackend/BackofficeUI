@@ -1,0 +1,10 @@
+
+@code {
+[Parameter] public string Value { get; set; }
+}
+
+
+<div class="form-group">
+    <label>Description</label>
+    <InputText @bind-Value="Value"></InputText>
+</div>
