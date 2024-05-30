@@ -1,9 +1,70 @@
-﻿@inject CoursesClient coursesClient
+﻿@page "/createcourse"
+@using BackOfficeUI.Models
+
 
 <h3>CreateCourse</h3>
-<CreateCourse >
-    
-</CreateCourse>
+<Card>
+    <CardHeader>
+        <div class="top-menu">
+            <h2>Create New Course</h2>
+        </div>
+    </CardHeader>
+    <CardBody>
+        <EditForm FormName="createcourseform" Model="course" method="post" novalidate>
+            <div class="form-row">
+                <div class="form-fields">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <InputText @bind-Value="course.Title"></InputText>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <InputText @bind-Value="course.Description"></InputText>
+                    </div>
+                    <div class="form-group">
+                        <label>Ingress</label>
+                        <InputText @bind-Value="course.Ingress"></InputText>
+                    </div>
+                    <div class="form-group">
+                        <label>Hours</label>
+                        <InputText @bind-Value="course.Hours"></InputText>
+                    </div>
+                    <div class="form-group">
+                        <label>Price</label>
+                        <InputTextArea @bind-Value="course.Price"></InputTextArea>
+                    </div>
+                    <div class="form-group">
+                        <label>Currency</label>
+                        <InputTextArea @bind-Value="course.Currency"></InputTextArea>
+                    </div>
+                    <div class="form-group">
+                        <label>ImageUri</label>
+                        <InputTextArea @bind-Value="course.ImageUri"></InputTextArea>
+                    </div>
+                    <div class="form-group">
+                        <label>ImageHeaderUri</label>
+                        <InputTextArea @bind-Value="course.ImageHeaderUri"></InputTextArea>
+                    </div>
+                    <div class="checkbox-group">
+                        <div class="input-group">
+                            <InputCheckbox id="Checkbox-IsDigital" @bind-Value="course.IsDigital" />
+                            <label>The course is digital</label>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="form-submit">
+                <button type="submit" class="btn-pink">Create</button>
+            </div>
+        </EditForm>
+    </CardBody>
+    <CardFooter>
+
+    </CardFooter>
+</Card>
+
 @code {
-   
+    private CreateCourseModel course = new CreateCourseModel();
+
 }
