@@ -80,89 +80,85 @@
                 </div>
 
                 <div class="form-fields">
-                    <div class="form-fields">
-                        <div class="form-row">
-                            <h4>Categories</h4>
-                            <button @onclick="AddCategoryRow" type="button" class="btn-theme-s">Add Row</button>
-                        </div>
+                    <h4>Categories</h4>
+                    <div class="form-group">
+                        <button @onclick="AddCategoryRow" type="button" class="btn-theme-s">Add Row</button>
                     </div>
+
                     @foreach (var item in course.Categories)
                     {
-                        <div class="form-row">
-                            <StringEdit Value="@item"/>
-                            <p @onclick="() => RemoveCategoryRow(item)" class="text-danger">X</p>
+                        <div class="item-row">
+                            <StringEdit Value="@item" />
+                            <p @onclick="() => RemoveCategoryRow(item)" class="text-danger btn-remove">X</p>
                         </div>
                     }
-                </div>
 
-                <div class="form-fields">
-                    <div class="form-fields">
-                        <div class="form-row">
-                            <h4>Program Details</h4>
-                            <button @onclick="AddProgramDetailRow" type="button" class="btn-theme-s">Add Row</button>
-                        </div>
-                    </div>
-                    @foreach (var item in course.Content.ProgramDetails)
-                    {
-                        <div class="form-row">
-                            <ProgramDetail ProgramDetails="item"/>
-                            <p @onclick="() => RemoveProgramDetailRow(item)" class="text-danger">X</p>
-                        </div>
-                    }
-                </div>
-            </div>
-            
-            <div class="form-row">
-                <div class="form-fields">
-                    <div class="form-fields">
-                        <div class="form-row">
-                            <h4>Authors</h4>
-                            <button @onclick="AddAuthorRow" type="button" class="btn-theme-s">Add Row</button>
-                        </div>
-                    </div>
-                    @foreach (var author in course.Authors)
-                    {
-                    <div class="form-row">
-                        <AuthorDetail Author="author"/>
-                        <p @onclick="() => RemoveAuthorRow(author)" class="text-danger">X</p>
-                    </div>
-                    }
-                </div>
+                    <h4>Includes</h4>
+                    <div class="form-group">
 
-                <div class="form-fields">
-                    <div class="form-fields">
-                        <div class="form-row">
-                            <h4>Includes</h4>
-                            <button @onclick="AddIncludesRow" type="button" class="btn-theme-s">Add Row</button>
-                        </div>
+                        <button @onclick="AddIncludesRow" type="button" class="btn-theme-s">Add Row</button>
                     </div>
                     @foreach (var item in course.Content.Includes)
                     {
-                        <div class="form-row">
-                            <StringEdit Value="@item"/>
-                            <p @onclick="() => RemoveIncludesRow(item)" class="text-danger">X</p>
+                        <div class="item-row">
+                            <StringEdit Value="@item" />
+                            <p @onclick="() => RemoveIncludesRow(item)" class="text-danger btn-remove">X</p>
                         </div>
                     }
-                </div>
 
-                <div class="form-fields">
-                    <div class="form-fields">
-                        <div class="form-row">
-                            <h4>Learn</h4>
-                            <button @onclick="AddLearnRow" type="button" class="btn-theme-s">Add Row</button>
-                        </div>
+
+                    <h4>Learn</h4>
+                    <div class="form-group">
+
+                        <button @onclick="AddLearnRow" type="button" class="btn-theme-s">Add Row</button>
                     </div>
                     @foreach (var item in course.Content.Learn)
                     {
-                    <div class="form-row">
-                        <StringEdit Value="@item"/>
-                        <p @onclick="() => RemoveLearnRow(item)" class="text-danger">X</p>
-                    </div>
+                        <div class="item-row">
+                            <StringEdit Value="@item" />
+                            <p @onclick="() => RemoveLearnRow(item)" class="text-danger btn-remove">X</p>
+                        </div>
                     }
                 </div>
 
-               
+
+                <div class="form-fields">
+                    <h4>Program Details</h4>
+                        <div class="form-group">
+                            
+                            <button @onclick="AddProgramDetailRow" type="button" class="btn-theme-s">Add Row</button>
+                        </div>
+                    @foreach (var item in course.Content.ProgramDetails)
+                    {
+                        <div class="item-row">
+                            <ProgramDetail ProgramDetails="item"/>
+                            <p @onclick="() => RemoveProgramDetailRow(item)" class="text-danger btn-remove">X</p>
+                        </div>
+                    }
+
+                </div>
+                
+                <div class="form-fields">
+                    <h4>Authors</h4>
+                    <div class="form-group">
+                        
+                        <button @onclick="AddAuthorRow" type="button" class="btn-theme-s">Add Row</button>
+                    </div>
+                    @foreach (var author in course.Authors)
+                    {
+                        <div class="item-row">
+                            <AuthorDetail Author="author" />
+                            <p @onclick="() => RemoveAuthorRow(author)" class="text-danger btn-remove">X</p>
+                        </div>
+                    }
+                </div>
+
+                
+
+
             </div>
+            
+            
             <div class="form-submit">
                 <button type="submit" class="btn-pink">Create</button>
             </div>
