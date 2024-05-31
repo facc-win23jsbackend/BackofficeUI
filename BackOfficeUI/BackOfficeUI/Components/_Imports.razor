@@ -1,4 +1,6 @@
-﻿@using System.Net.Http
+﻿@attribute [Authorize]
+
+@using System.Net.Http
 @using System.Net.Http.Json
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
@@ -17,3 +19,4 @@
 @using BackOfficeUI.GraphQL.Components
 @using StrawberryShake
 @using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authorization
