@@ -53,6 +53,6 @@ namespace BackOfficeUI.Models
         
         public virtual List<AuthorModel> Authors { get; set; } = [new AuthorModel()];
         public virtual PriceModel Prices { get; set; } = new();
-        public virtual ContentModel Content { get; set; } = new();
+        public virtual ContentModel? Content { get; set; } = new();
     }
 }
