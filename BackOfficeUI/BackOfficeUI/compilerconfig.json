@@ -1,0 +1,14 @@
+﻿[
+  {
+    "outputFile": "Components/Pages/Courses/Courses.razor.css",
+    "inputFile": "Components/Pages/Courses/Courses.razor.scss"
+  },
+  {
+    "outputFile": "Components/Pages/Courses/CreateCourse.razor.css",
+    "inputFile": "Components/Pages/Courses/CreateCourse.razor.scss"
+  },
+  {
+    "outputFile": "Components/Pages/Courses/SingleCourse.razor.css",
+    "inputFile": "Components/Pages/Courses/SingleCourse.razor.scss"
+  }
+]

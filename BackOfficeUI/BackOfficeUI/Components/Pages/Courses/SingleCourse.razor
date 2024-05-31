@@ -1,0 +1,332 @@
+﻿@attribute [StreamRendering]
+@page "/courses/{id}"
+@using System.Net.Http.Headers
+@using BackOfficeUI.Client.Models
+@using BackOfficeUI.Client.Components.Courses
+@inject IHttpContextAccessor httpContextAccessor
+@inject HttpClient Http
+@inject IConfiguration configuration
+@inject IToastService toastService
+@inject NavigationManager NavigationManager
+
+@if (id is null || course is null)
+{
+    <p>Loading ..</p>
+}
+else
+{
+    <Card>
+        <CardHeader>
+            <div class="top-menu">
+                <h2>Update course - @id</h2>
+                <button type="button" @onclick="DeleteCourse">DELETE</button>
+                @if (!string.IsNullOrEmpty(error))
+                {
+                    <p>@error</p>
+                }
+            </div>
+        </CardHeader>
+        <CardBody>
+            <EditForm OnValidSubmit="() => AddCourse()" FormName="updatecourseform" Model="course" method="post" novalidate>
+                <div class="form-row">
+                    <div class="form-fields">
+                        <h4>Course Info</h4>
+                        <div class="form-group">
+                            <label>Title</label>
+                            <InputText @bind-Value="course.Title"></InputText>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                             <InputText @bind-Value="course.Content.Description"></InputText>
+                        </div>
+                        <div class="form-group">
+                            <label>Ingress</label>
+                            <InputText @bind-Value="course.Ingress"></InputText>
+                        </div>
+                        <div class="form-group">
+                            <label>Hours</label>
+                            <InputText @bind-Value="course.Hours"></InputText>
+                        </div>
+
+                        <div class="form-group">
+                            <label>ImageUri</label>
+                            <InputTextArea @bind-Value="course.ImageUri"></InputTextArea>
+                        </div>
+                        <div class="form-group">
+                            <label>ImageHeaderUri</label>
+                            <InputTextArea @bind-Value="course.ImageHeaderUri"></InputTextArea>
+                        </div>
+                        <div class="checkbox-group">
+                            <div class="input-group">
+                                <InputCheckbox id="Checkbox-IsDigital" @bind-Value="course.IsDigital"/>
+                                <label>The course is digital</label>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <div class="input-group">
+                                <InputCheckbox id="Checkbox-IsBestseller" @bind-Value="course.IsBestseller"/>
+                                <label>The course is best seller</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Price</label>
+                            <InputNumber @bind-Value="course.Prices.Price"></InputNumber>
+                        </div>
+                        <div class="form-group">
+                            <label>Discount</label>
+                            <InputNumber @bind-Value="course.Prices.Discount"></InputNumber>
+                        </div>
+                        <div class="form-group">
+                            <label>Currency</label>
+                            <InputText @bind-Value="course.Prices.Currency"></InputText>
+                        </div>
+                    </div>
+
+                    <div class="form-fields">
+                        <h4>Categories</h4>
+                        <div class="form-group">
+                            <button @onclick="AddCategoryRow" type="button" class="btn-theme-s">Add Row</button>
+                        </div>
+
+                        @if (course?.Categories?.Count > 0)
+                        {
+                            @foreach (var item in course.Categories)
+                            {
+                                <div class="item-row">
+                                    <StringEdit Value="@item"/>
+                                    <p @onclick="() => RemoveCategoryRow(item)" class="text-danger btn-remove">X</p>
+                                </div>
+                            }
+                        }
+
+                        <h4>Includes</h4>
+                        <div class="form-group">
+
+                            <button @onclick="AddIncludesRow" type="button" class="btn-theme-s">Add Row</button>
+                        </div>
+                        @if (course?.Content?.Includes?.Count > 0)
+                        {
+                            @foreach (var item in course.Content.Includes)
+                            {
+                                <div class="item-row">
+                                    <StringEdit Value="@item"/>
+                                    <p @onclick="() => RemoveIncludesRow(item)" class="text-danger btn-remove">X</p>
+                                </div>
+                            }
+                        }
+
+
+                        <h4>Learn</h4>
+                        <div class="form-group">
+
+                            <button @onclick="AddLearnRow" type="button" class="btn-theme-s">Add Row</button>
+                        </div>
+                        @if (course?.Content?.Learn?.Count > 0)
+                        {
+                            @foreach (var item in course.Content.Learn)
+                            {
+                        <div class="item-row">
+                            <StringEdit Value="@item" />
+                            <p class="text-danger btn-remove"
+                               @onclick="() => RemoveLearnRow(item)">X</p>
+                        </div>
+                            }
+                        }
+
+                    </div>
+
+
+                    <div class="form-fields">
+                        <h4>Program Details</h4>
+                        <div class="form-group">
+
+                            <button @onclick="AddProgramDetailRow" type="button" class="btn-theme-s">Add Row</button>
+                        </div>
+                        @if (course?.Content?.ProgramDetails?.Count > 0)
+                        {
+                            @foreach (var item in course.Content.ProgramDetails)
+                            {
+                                <div class="item-row">
+                                    <ProgramDetail ProgramDetails="item"/>
+                                    <p @onclick="() => RemoveProgramDetailRow(item)" class="text-danger btn-remove">X</p>
+                                </div>
+                            }
+                        }
+
+
+                    </div>
+
+                    <div class="form-fields">
+                        <h4>Authors</h4>
+                        <div class="form-group">
+
+                            <button @onclick="AddAuthorRow" type="button" class="btn-theme-s">Add Row</button>
+                        </div>
+                        @if (course?.Content?.ProgramDetails?.Count > 0)
+                        {
+                            @foreach (var author in course.Authors)
+                            {
+                                <div class="item-row">
+                                    <AuthorDetail Author="author"/>
+                                    <p @onclick="() => RemoveAuthorRow(author)" class="text-danger btn-remove">X</p>
+                                </div>
+                            }
+                        }
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-submit">
+                    <button type="submit" class="btn-pink">Create</button>
+                </div>
+            </EditForm>
+        </CardBody>
+        <CardFooter>
+
+        </CardFooter>
+    </Card>
+}
+
+
+@code {
+    [Parameter] public string? id { get; set; }
+
+    public CreateCourseModel? course { get; set; } 
+    public string? error { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        course = new CreateCourseModel();
+        var token = await httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+        Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        course = await Http.GetFromJsonAsync<CreateCourseModel>($"{configuration["CoursesApi"]}/api/courses/{id}");
+
+        course.Content ??= new ContentModel();
+    }
+
+    private async Task DeleteCourse()
+    {
+        var token = await httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+        Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        var response = await Http.DeleteAsync($"{configuration["CoursesApi"]}/api/courses/{id}");
+        if (response.IsSuccessStatusCode)
+        {
+            toastService.ShowSuccess("Course added successfully");
+            NavigationManager.NavigateTo("/courses");
+        }
+        else
+        {
+            error = await response.Content.ReadAsStringAsync();
+            toastService.ShowError(response.StatusCode.ToString());
+        }
+    }
+
+    private async Task AddCourse()
+    {
+        var token = await httpContextAccessor.HttpContext.GetTokenAsync("access_token");
+        Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        var response = await Http.PutAsJsonAsync($"{configuration["CoursesApi"]}/api/courses/{id}", course);
+
+        if (response.IsSuccessStatusCode)
+        {
+            toastService.ShowSuccess("Yeah");
+        }
+        else
+        {
+            error = await response.Content.ReadAsStringAsync();
+            toastService.ShowError(response.StatusCode.ToString());
+        }
+    }
+
+    private void AddCategoryRow()
+    {
+        if (course.Categories is null)
+        {
+            course.Categories = new List<string>();
+        }
+
+        course.Categories.Add("");
+    }
+
+    private void RemoveCategoryRow(string category)
+    {
+        if (course.Categories.Count > 1)
+        {
+            course.Categories.Remove(category);
+        }
+    }
+
+    private void AddAuthorRow()
+    {
+        if (course.Authors is null)
+        {
+            course.Authors = new List<AuthorModel>();
+        }
+        course.Authors.Add(new AuthorModel());
+    }
+
+    private void RemoveAuthorRow(AuthorModel model)
+    {
+        if (course.Authors.Count > 1)
+        {
+            course.Authors.Remove(model);
+        }
+    }
+
+    private void AddProgramDetailRow()
+    {
+        if (course.Content.ProgramDetails is null)
+        {
+            course.Content.ProgramDetails = new List<ProgramDetailModel>();
+        }
+        course.Content.ProgramDetails.Add(new ProgramDetailModel());
+    }
+
+    private void RemoveProgramDetailRow(ProgramDetailModel model)
+    {
+        if (course.Content.ProgramDetails.Count > 1)
+        {
+            course.Content.ProgramDetails.Remove(model);
+        }
+    }
+
+    private void AddIncludesRow()
+    {
+        if (course.Content.Includes is null)
+        {
+            course.Content.Includes = new List<string>();
+        }
+        course.Content.Includes.Add("");
+    }
+
+    private void RemoveIncludesRow(string includes)
+    {
+        if (course.Content.Includes.Count > 1)
+        {
+            course.Content.Includes.Remove(includes);
+        }
+    }
+
+    private void AddLearnRow()
+    {
+        if (course.Content.Learn is null)
+        {
+            course.Content.Learn = new List<string>();
+        }
+        course.Content.Learn.Add("");
+    }
+
+    private void RemoveLearnRow(string learn)
+    {
+        if (course.Content.Learn.Count > 1)
+        {
+            course.Content.Learn.Remove(learn);
+        }
+    }
+
+}

@@ -1,0 +1,49 @@
+﻿@page "/courses"
+@using BackOfficeUI.Client.Components.Table
+@attribute [StreamRendering]
+
+<h1>Courses</h1>
+
+<UseGetCourses Context="result">
+    <ChildContent>
+        <div class="card">
+            
+            <div class="data-table">
+                <tr class="tr">
+                    <th>Title</th>
+                    <th>Options</th>
+                </tr>
+                @foreach (var course in result.Courses)
+                {
+                    <tr class="courses-table-content">
+                        <td>@course.Title</td>
+                        <td><a href="courses/@course.Id">Edit</a></td>
+                    </tr>
+                }
+            </div>
+            <div class="btn-link">
+            <NavLink class="btn-pink " href="/courses/new">Create a new course</NavLink>
+            </div>
+           
+
+        </div>
+       
+    </ChildContent>
+    <ErrorContent>
+        <div class="container">
+            Error ..
+        </div>
+    </ErrorContent>
+    <LoadingContent>
+        <div class="container">
+            Loading ..
+        </div>
+    </LoadingContent>
+</UseGetCourses>
+
+
+
+
+@code {
+   
+}

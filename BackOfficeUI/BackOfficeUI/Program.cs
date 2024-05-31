@@ -3,11 +3,13 @@ using BackOfficeUI.Client.Pages;
 using BackOfficeUI.Components;
 using BackOfficeUI.Extensions;
 using Blazored.Toast;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using System.Net.Http.Headers;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,12 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
+builder.Services.AddCoursesClient().ConfigureHttpClient(async (serviceProvider, c) => {
+    var contextAccessor = serviceProvider.GetRequiredService<IHttpContextAccessor>();
+    var token = await contextAccessor.HttpContext!.GetTokenAsync("access_token");
+    c.BaseAddress = new Uri(builder.Configuration["CoursesGraphQL"]!);
+    c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+});
 
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
